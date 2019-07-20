@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- header部分 -->
-    <mt-header fixed title="黑马程序员 · Vue项目"></mt-header>
+    <mt-header fixed title="xxx · Vue项目"></mt-header>
     <!-- router部分 -->
     <transition>
       <router-view></router-view>
@@ -34,7 +34,7 @@ export default {};
 </script>
 <style>
 .container {
-  padding-top: 40px;
+  padding: 40px 0 53px;
   overflow-x: hidden
 }
 .v-enter {

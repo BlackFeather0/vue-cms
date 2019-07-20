@@ -7,5 +7,6 @@
                 "style":true
             }
         ]
-    ]]
+    ]],
+    "ignore":"./views/assets/mui-master/examples/hello-mui/js/mui.js"
 }

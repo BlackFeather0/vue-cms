@@ -10,11 +10,23 @@ Vue.use(VueRouter)
 import VueResource from 'vue-resource'
 // 2.2 安装 vue-resource
 Vue.use(VueResource)
+Vue.http.options.root = "http://www.liulongbin.top:3005"
+//时间过滤
+import moment from 'moment'
+Vue.filter('dateFormat', function (dataStr, pattern = "YYYY-MM-DD HH:mm:ss") {
+    return moment(dataStr).format(pattern)
+})
 //按需引入Header
-import {Header,Swipe,SwipeItem} from "mint-ui"
-Vue.component(Header.name, Header);
+import {
+    Header,
+    Swipe,
+    SwipeItem,
+    Button
+} from "mint-ui"
+Vue.component(Header.name, Header, );
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
+Vue.component(Button.name, Button);
 // import 'mint-ui/lib/style.css'
 import App from "./App.vue"
 import router from "./router.js"
