@@ -1,12 +1,8 @@
 <template>
-    <div>
-        这是member组件
-    </div>
+  <div>这是member组件</div>
 </template>
 <script>
-export default {
-    
-}
+export default {};
 </script>
 <style>
 </style>
