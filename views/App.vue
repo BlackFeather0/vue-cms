@@ -30,9 +30,19 @@
   </div>
 </template>
 <script>
-export default {};
+import mui from "../views/assets/mui-master/examples/hello-mui/js/mui.js"
+export default {
+  mounted() {
+     mui("nav").on("tap", "a", function() {
+      mui.openWindow({ url: this.href });
+    });
+  },
+};
 </script>
 <style>
+.mint-header.is-fixed {
+  z-index: 99;
+}
 .container {
   padding: 40px 0 53px;
   overflow-x: hidden
