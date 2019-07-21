@@ -19,7 +19,7 @@
     </div>
     <ul class="photolist">
       <router-link tag="li" :to="'/home/photoInfo/'+item.id" v-for="item in list" :key="item.id">
-        <img v-lazy="item.img_url" />
+        <img v-lazy="item.img_url">
         <div class="imginfo">
           <h1>{{ item.title }}</h1>
           <p>{{ item.zhaiyao }}</p>
@@ -42,10 +42,6 @@ export default {
     mui("nav").on("tap", "a", function() {
       mui.openWindow({ url: this.href });
     });
-    // 初始化滚动
-    mui(".mui-scroll-wrapper").scroll({
-      deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
-    });
   },
   created() {
     this.getAllCategory();
@@ -66,6 +62,12 @@ export default {
         if (res.body.status === 0) {
           // console.log(res.body.message);
           this.list = res.body.message;
+          setTimeout(() => {
+            // 初始化滚动
+            mui(".mui-scroll-wrapper").scroll({
+              deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+            });
+          }, 50);
         }
       });
     }
@@ -73,11 +75,8 @@ export default {
 };
 </script>
 <style scoped>
-* {
-  touch-action: pan-y;
-}
-.photolist {
 
+.photolist {
   padding: 0;
   margin: 0 20px;
 
@@ -90,13 +89,13 @@ export default {
   margin-bottom: 10px;
   list-style: none;
   box-shadow: 0 0 9px #999;
-   background-color: #efeff4;
+  background-color: #efeff4;
 }
 .photolist li img {
   width: 100%;
   vertical-align: middle;
 }
-image[lazy="loading"] {
+.photolist img[lazy="loading"] {
   width: 40px;
   height: 300px;
   margin: auto;
