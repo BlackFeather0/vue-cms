@@ -23,7 +23,6 @@ module.exports = {
     module: {
         rules: [
             { test: /\.css$/, use: [ MiniCssExtractPlugin.loader, 'css-loader'] },
-            // { test: /\.less$/, use: [ MiniCssExtractPlugin.loader, 'less-loader'] },
             { test: /\.(woff2?|woff|eot|ttf|otf|svg)(\?.*)?$/, use: 'file-loader' },
             {
                 test: /\.(jpg|png|gif|bmp|jpeg)$/,

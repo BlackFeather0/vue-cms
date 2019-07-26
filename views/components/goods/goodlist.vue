@@ -1,20 +1,20 @@
 <template>
   <div class="goods-list">
-    <div class="goods-item">
-      <img src="../../images/menu1(1).png" alt />
-      <h1 class="title">小米（Mi）小米Note 16G双网通版</h1>
+    <div class="goods-item" v-for="item in goodsList" :key="item.id" @click="detail(item.id)">
+      <img :src="item.img_url" alt />
+      <h1 class="title">{{ item.title }}</h1>
       <div class="info">
         <p class="price">
-          <span class="now">￥899</span>
-          <span class="old">￥999</span>
+          <span class="now">￥{{item.sell_price}}</span>
+          <span class="old">￥{{item.market_price}}</span>
         </p>
         <p class="sell">
           <span>热卖中</span>
-          <span>剩60件</span>
+          <span>{{ item.stock_quantity }}</span>
         </p>
       </div>
     </div>
-    <div class="goods-item">
+    <!-- <div class="goods-item">
       <img src="../../images/menu2.png" alt />
       <h1 class="title">小米（Mi）小米Note 16G双网通版</h1>
       <div class="info">
@@ -27,11 +27,44 @@
           <span>剩60件</span>
         </p>
       </div>
-    </div>
+    </div>-->
+    <mt-button type="danger" size="large" @click="getMore" v-if="flag">加载更多</mt-button>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      pageIndex: 1,
+      goodsList: [],
+      flag: true
+    };
+  },
+  created() {
+    this.getDataList();
+  },
+  methods: {
+    getDataList() {
+      this.$http.get("api/getgoods?pageindex=" + this.pageIndex).then(res => {
+        console.log(res.body);
+        if (res.body.status == 0) {
+          this.goodsList = this.goodsList.concat(res.body.message);
+        }
+        if (res.body.message.length < 10) {
+          this.flag = false;
+        }
+      });
+    },
+    getMore() {
+      this.pageIndex++;
+      this.getDataList();
+    },
+    detail(id) {
+      // console.log(id);
+      this.$router.push({ name: "goodInfo", params: { id } });
+    }
+  }
+};
 </script>
 <style>
 .goods-list {

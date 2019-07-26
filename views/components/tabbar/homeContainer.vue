@@ -1,9 +1,7 @@
 <template>
   <div container-home>
-    <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item in lunbotuList" :key="item.id"><img :src="item.img" alt=""></mt-swipe-item>
-
-    </mt-swipe>
+  <!-- 轮播图 -->
+  <swiper :lunbotuList="lunbotuList" class="mint-swipe" :isfull='true'></swiper>
     <!-- 九宫格 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
       <li class="mui-table-view-cell mui-media mui-col-xs-4">
@@ -46,6 +44,7 @@
   </div>
 </template>
 <script>
+import swiper from '../subcomponents/swiper.vue'
 export default {
     data() {
         return {
@@ -66,6 +65,9 @@ export default {
                 }
             })
         }
+    },
+    components:{
+      swiper
     }
 };
 </script>
