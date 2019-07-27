@@ -79,7 +79,7 @@ export default {
     getGoodsInfo() {
       this.$http.get("api/goods/getinfo/" + this.id).then(res => {
         if (res.body.status === 0) {
-          console.log(res);
+          // console.log(res);
           this.goodsInfo = res.body.message[0];
         }
       });
@@ -92,6 +92,13 @@ export default {
     },
     addToShopCar() {
       this.ballFlag = !this.ballFlag;
+      let product = {
+        count:this.selectedCount,
+        price:this.goodsInfo.sell_price,
+        id:this.id,
+        selected: true,
+      }
+      this.$store.commit("addCar",product)
     },
     beforeEnter(el) {
       el.style.opacity = 1
@@ -115,7 +122,7 @@ export default {
     //子组件向父组件传值
     getSelectedCount(count) {
       this.selectedCount = count;
-      console.log("父组件拿到的数量值为： " + this.selectedCount);
+      // console.log("父组件拿到的数量值为： " + this.selectedCount);
     }
   },
   components: {
