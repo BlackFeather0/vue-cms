@@ -5,8 +5,10 @@
       id="test"
       class="mui-input-numbox"
       type="number"
+      :value="initCount"
       @change="countChanged"
       ref="numbox"
+      readonly
     />
     <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
   </div>
@@ -19,20 +21,19 @@ export default {
   },
   methods: {
     countChanged() {
-      // 每当 文本框的数据被修改的时候，立即把 最新的数据，通过事件调用，传递给父组件
-      // console.log(this.$refs.numbox.value);
-      this.$emit("getcount", parseInt(this.$refs.numbox.value));
+      //   console.log(this.$refs.numbox.value);
+      this.$store.commit("updateCount", {
+        id: this.goodsid,
+        count: parseInt(this.$refs.numbox.value)
+      });
     }
-
   },
-  props: ["max"],
+  props: ["initCount", "goodsid"],
   watch: {
     // 属性监听
     max: function(newVal, oldVal) {
       // 使用 JS API 设置 numbox 的最大值
-      mui(".mui-numbox")
-        .numbox()
-        .setOption("max", newVal);
+      mui(".mui-numbox").numbox();
     }
   }
 };

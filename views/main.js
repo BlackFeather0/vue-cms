@@ -6,30 +6,84 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 var car = JSON.parse(localStorage.getItem('car') || '[]')
 var store = new Vuex.Store({
-    state:{
+    state: {
         car
     },
-    mutations:{
-        addCar(state,product) {
-            let flag =false
-            state.car.some(item=>{
-                if(item.id==product.id) {
+    mutations: {
+        addCar(state, product) {
+            let flag = false
+            state.car.some(item => {
+                if (item.id == product.id) {
                     item.count += parseInt(product.count)
                     flag = true
                     return true
                 }
             })
-            if(!flag) state.car.push(product)
-            localStorage.setItem('car',JSON.stringify(state.car))
+            if (!flag) state.car.push(product)
+            localStorage.setItem('car', JSON.stringify(state.car))
+        },
+        updateCount(state, product) {
+            state.car.some(item => {
+                if (item.id == product.id) {
+                    item.count = product.count
+                    return true
+                }
+            })
+            localStorage.setItem('car', JSON.stringify(state.car))
+        },
+        removeGoods(state, id) {
+            state.car.some((item, i) => {
+                if (item.id == id) {
+                    state.car.splice(i, 1)
+                    return true
+                }
+            })
+            localStorage.setItem('car', JSON.stringify(state.car))
+        },
+        updataGoodsSelect(state, info) {
+            state.car.some(item => {
+                if (item.id == info.id) {
+                    item.selected = info.selected
+                    return true
+                }
+            })
+            localStorage.setItem('car', JSON.stringify(state.car))
         }
     },
-    getters:{
+    getters: {
         getAllcount(state) {
             let c = 0
-            state.car.forEach(item=>{
+            state.car.forEach(item => {
                 c += item.count
             })
             return c
+        },
+        getGoodsCount(state) {
+            let o = {}
+            state.car.forEach(item => {
+                o[item.id] = item.count
+            })
+            return o
+        },
+        getGoodsSelected(state) {
+            let o = {}
+            state.car.forEach(item => {
+                o[item.id] = item.selected
+            })
+            return o
+        },
+        getCountAndAmount(state) {
+            let o = {
+                count:0,
+                amount:0
+            }
+            state.car.some(item=>{
+                if(item.selected) {
+                    o.count += item.count
+                    o.amount += item.count *item.price
+                }
+            })
+            return o
         }
     }
 })
@@ -52,7 +106,6 @@ Vue.filter('dateFormat', function (dataStr, pattern = "YYYY-MM-DD HH:mm:ss") {
 //按需引入Header
 import Mintui from "mint-ui"
 Vue.use(Mintui);
-// import 'mint-ui/lib/style.css'
 import App from "./App.vue"
 import router from "./router.js"
 var vm = new Vue({

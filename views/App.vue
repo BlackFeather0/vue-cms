@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <!-- header部分 -->
-    <mt-header fixed title="xxx · Vue项目"></mt-header>
+    <mt-header fixed title="xxx · Vue项目">
+      <span slot="left" @click="back" v-show="flag">
+        <mt-button icon="back">返回</mt-button>
+      </span>
+    </mt-header>
     <!-- router部分 -->
     <transition>
       <router-view></router-view>
@@ -30,13 +34,35 @@
   </div>
 </template>
 <script>
-import mui from "../views/assets/mui-master/examples/hello-mui/js/mui.js"
+import mui from "../views/assets/mui-master/examples/hello-mui/js/mui.js";
 export default {
+  data() {
+    return {
+      flag : false
+    }
+  },
+  created() {
+    // console.log(this.$route);
+    this.flag = this.$route.path ==='/home'? false : true
+  },
   mounted() {
-     mui("nav").on("tap", "a", function() {
+    mui("nav").on("tap", "a", function() {
       mui.openWindow({ url: this.href });
     });
   },
+  methods: {
+    back() {
+      this.$router.go(-1)
+    }
+  },watch: {
+    "$route.path": function(newVal) {
+      if (newVal === "/home") {
+        this.flag = false;
+      } else {
+        this.flag = true;
+      }
+    }
+  }
 };
 </script>
 <style>
@@ -48,7 +74,7 @@ export default {
 }
 .container {
   padding: 40px 0 53px;
-  overflow-x: hidden
+  overflow-x: hidden;
 }
 .v-enter {
   opacity: 0;
